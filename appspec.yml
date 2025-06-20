@@ -1,0 +1,26 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /mnt/app
+permissions:
+  - object: /mnt
+    owner: ubuntu
+    group: ubuntu
+    type:
+      - file
+      - directory
+
+hooks:
+  AfterInstall:
+    - location: /ops/deployment/install.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: /ops/deployment/run.sh
+      timeout: 300
+      runas: ubuntu
+  ValidateService:
+    - location: /ops/deployment/validate.sh
+      timeout: 300
+      runas: ubuntu
